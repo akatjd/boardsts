@@ -2,6 +2,7 @@ package com.board.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,9 +18,9 @@ import com.board.util.UiUtils;
 @Controller
 public class BoardController extends UiUtils {
 	
-	private final BoardService  boardService;
+	private final BoardService boardService;
 	
-	private BoardController(BoardService boardService) {
+	public BoardController(BoardService boardService) {
 		this.boardService = boardService;
 	}
 	
