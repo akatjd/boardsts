@@ -45,4 +45,6 @@ public class CommentTests {
 		
 		commentService.getCommentList(params);
 	}
+	
+	// 왜업로드가 안되지
 }
