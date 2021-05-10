@@ -18,11 +18,20 @@ import com.board.util.FileUtils;
 @Service
 public class BoardServiceImpl implements BoardService {
 	
-	@Autowired
+	
 	private BoardMapper boardMapper;
 	
 	@Autowired
+	public BoardServiceImpl(BoardMapper boardMapper) {
+		this.boardMapper = boardMapper;
+	}
+	
 	private AttachMapper attachMapper;
+	
+	@Autowired
+	public BoardServiceImpl(AttachMapper attachMapper) {
+		this.attachMapper = attachMapper;
+	}
 	
 	@Autowired
 	private FileUtils fileUtils;
@@ -35,9 +44,19 @@ public class BoardServiceImpl implements BoardService {
 			queryResult = boardMapper.insertBoard(params);
 		} else {
 			queryResult = boardMapper.updateBoard(params);
+			
+			// 파일이 추가, 삭제, 변경된 경우
+			if ("Y".equals(params.getChangeYn())) {
+				attachMapper.deleteAttach(params.getIdx());
+
+				// fileIdxs에 포함된 idx를 가지는 파일의 삭제여부를 'N'으로 업데이트
+				if (CollectionUtils.isEmpty(params.getFileIdxs()) == false) {
+					attachMapper.undeleteAttach(params.getFileIdxs());
+				}
+			}
 		}
 
-		return (queryResult == 1) ? true : false;
+		return (queryResult > 0);
 	}
 	
 	@Override

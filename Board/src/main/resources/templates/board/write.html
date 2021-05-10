@@ -160,12 +160,16 @@
 			
 			function removeFile(elem) {
 
+				document.getElementById('changeYn').value = 'Y';
+
 				const prevTag = $(elem).prev().prop('tagName');
 				if (prevTag === 'BUTTON') {
 					const file = $(elem).prevAll('input[type="file"]');
 					const filename = $(elem).prevAll('input[type="text"]');
 					file.val('');
 					filename.val('파일 찾기');
+
+					$(elem).prevAll('input[name="fileIdxs"]').remove();
 					return false;
 				}
 
@@ -175,10 +179,14 @@
 			
 			function changeFilename(file) {
 
+				document.getElementById('changeYn').value = 'Y';
+
 				file = $(file);
 				const filename = file[0].files[0].name;
-				const target = file.prevAll('input');
+				const target = file.prevAll('input.upload-name'); // 변경된 코드
 				target.val(filename);
+
+				file.prevAll('input[name="fileIdxs"]').remove(); // 추가된 로직
 			}
 
 			/*]]>*/
