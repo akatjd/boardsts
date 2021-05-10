@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.board.constant.Method;
+import com.board.domain.AttachDTO;
 import com.board.domain.BoardDTO;
 import com.board.service.BoardService;
 import com.board.util.UiUtils;
@@ -24,21 +25,6 @@ public class BoardController extends UiUtils {
 	
 	@Autowired
 	private BoardService boardService;
-
-	@GetMapping(value = "/board/write.do")
-	public String openBoardWrite(@ModelAttribute("params") BoardDTO params, @RequestParam(value = "idx", required = false) Long idx, Model model) {
-		if (idx == null) {
-			model.addAttribute("board", new BoardDTO());
-		} else {
-			BoardDTO board = boardService.getBoardDetail(idx);
-			if (board == null || "Y".equals(board.getDeleteYn())) {
-				return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list.do", Method.GET, null, model);
-			}
-			model.addAttribute("board", board);
-		}
-
-		return "board/write";
-	}
 
 	@PostMapping(value = "/board/register.do")
 	public String registerBoard(final BoardDTO params, final MultipartFile[] files, Model model) {
@@ -101,6 +87,25 @@ public class BoardController extends UiUtils {
 		}
 
 		return showMessageWithRedirect("게시글 삭제가 완료되었습니다.", "/board/list.do", Method.GET, pagingParams, model);
+	}
+	
+	@GetMapping(value = "/board/write.do")
+	public String openBoardWrite(@ModelAttribute("params") BoardDTO params, @RequestParam(value = "idx", required = false) Long idx, Model model) {
+		
+		if(idx == null) {
+			model.addAttribute("board", new BoardDTO());
+		} else {
+			BoardDTO board = boardService.getBoardDetail(idx);
+			if(board == null || "Y".equals(board.getDeleteYn())) {
+				return showMessageWithRedirect("없는 게시글이거나 이미 삭제된 게시글입니다.", "/board/list.do", Method.GET, null, model);
+			}
+			model.addAttribute("board", board);
+			
+			List<AttachDTO> fileList = boardService.getAttachFileList(idx);
+			model.addAttribute("fileList", fileList);
+		}
+		
+		return "board/write";
 	}
 	
 }

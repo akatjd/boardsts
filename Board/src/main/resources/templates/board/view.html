@@ -168,7 +168,7 @@
 					return false;
 				}
 				
-				var uri = /*[[ @{/comments/ }]]*/ + idx;
+				var uri = [[ @{/comments/ }]] + idx;
 				var headers = {"Content-Type": "apllication/json", "X-HTTP-Method-Override": "DELETE"};
 				
 				$.ajax({

@@ -12,7 +12,6 @@ import com.board.domain.AttachDTO;
 import com.board.domain.BoardDTO;
 import com.board.mapper.AttachMapper;
 import com.board.mapper.BoardMapper;
-import com.board.paging.Criteria;
 import com.board.paging.PaginationInfo;
 import com.board.util.FileUtils;
 
@@ -94,6 +93,16 @@ public class BoardServiceImpl implements BoardService {
 		}
 
 		return boardList;
+	}
+	
+	@Override
+	public List<AttachDTO> getAttachFileList(Long boardIdx) {
+
+		int fileTotalCount = attachMapper.selectAttachTotalCount(boardIdx);
+		if (fileTotalCount < 1) {
+			return Collections.emptyList();
+		}
+		return attachMapper.selectAttachList(boardIdx);
 	}
 	
 }

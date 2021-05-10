@@ -57,7 +57,7 @@
 		FROM
 			tb_attach
 		WHERE
-			boardIdx = #{boardIdx}
+			board_idx = #{boardIdx}
 		AND
 			delete_yn = 'N'
 	</select>

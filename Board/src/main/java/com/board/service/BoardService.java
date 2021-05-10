@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.board.domain.AttachDTO;
 import com.board.domain.BoardDTO;
 
 public interface BoardService {
@@ -17,4 +18,6 @@ public interface BoardService {
 	public boolean deleteBoard(Long idx);
 	
 	public List<BoardDTO> getBoardList(BoardDTO params);
+	
+	public List<AttachDTO> getAttachFileList(Long boardIdx);
 }
