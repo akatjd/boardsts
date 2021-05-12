@@ -1,6 +1,5 @@
 package com.board.domain;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import lombok.Getter;

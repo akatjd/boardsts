@@ -15,7 +15,7 @@ import org.springframework.transaction.interceptor.RuleBasedTransactionAttribute
 import org.springframework.transaction.interceptor.TransactionInterceptor;
 
 @Configuration
-public class TansactionAspect {
+public class TransactionAspect {
 	
 	private static final String AOP_TRANSACTION_METHOD_NAME = "*";
 	private static final String AOP_TRANSACTION_EXPRESSION = "execution(* com.board..service.*Impl.*(..))";

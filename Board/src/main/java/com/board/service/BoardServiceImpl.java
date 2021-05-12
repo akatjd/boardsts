@@ -18,20 +18,11 @@ import com.board.util.FileUtils;
 @Service
 public class BoardServiceImpl implements BoardService {
 	
-	
+	@Autowired
 	private BoardMapper boardMapper;
 	
 	@Autowired
-	public BoardServiceImpl(BoardMapper boardMapper) {
-		this.boardMapper = boardMapper;
-	}
-	
 	private AttachMapper attachMapper;
-	
-	@Autowired
-	public BoardServiceImpl(AttachMapper attachMapper) {
-		this.attachMapper = attachMapper;
-	}
 	
 	@Autowired
 	private FileUtils fileUtils;
@@ -122,6 +113,11 @@ public class BoardServiceImpl implements BoardService {
 			return Collections.emptyList();
 		}
 		return attachMapper.selectAttachList(boardIdx);
+	}
+	
+	@Override
+	public AttachDTO getAttachDetail(Long idx) {
+		return attachMapper.selectAttachDetail(idx);
 	}
 	
 }
